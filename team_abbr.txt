@@ -1,0 +1,16 @@
+##NFL Roster Scrape
+
+library(nflscrapR)
+
+
+team_abbr <- nflteams$Abbr
+team_abbr <- as.character(nflteams$Abbr)
+
+
+all <- lapply(team_abbr, function(x) season_rosters(2015, TeamInt = x))
+
+all_positions15 = as.data.frame(data.table::rbindlist(all))
+
+spg15 <- season_player_game(2015)
+
+spg_15 <- merge(x = spg15, y = all_positions15, by = "name", all.y = TRUE)
